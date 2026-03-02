@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-primary: #4640de;
+  --brand-secondary: #ccccf5;
+  --accent-blue: #26a4ff;
+
+  --neutral-0: #ffffff;
+  --neutral-100: #25324b;
+  --neutral-80: #515b6f;
+  --neutral-60: #7c8493;
+  --neutral-20: #d6ddeb;
+
+  --surface-light: #f8f8fd;
+  --black: #202430;
+
+  --shadow-search:
+    0 2.713565px 4.396663px rgba(192, 192, 192, 0.03),
+    0 6.86281px 11.11949px rgba(192, 192, 192, 0.04),
+    0 13.999489px 22.682716px rgba(192, 192, 192, 0.05),
+    0 28.8363px 46.722107px rgba(192, 192, 192, 0.06),
+    0 79px 128px rgba(192, 192, 192, 0.09);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-background: var(--surface-light);
+  --color-foreground: var(--neutral-100);
+  --font-sans: var(--font-epilogue);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--surface-light);
+  color: var(--neutral-100);
+  font-family: var(--font-epilogue), system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.font-heading {
+  font-family: "Clash Display", "Sora", var(--font-redhat-display), var(--font-epilogue), sans-serif;
+}
+
+.font-logo {
+  font-family: var(--font-redhat-display), var(--font-epilogue), sans-serif;
+  letter-spacing: -0.24px;
 }
