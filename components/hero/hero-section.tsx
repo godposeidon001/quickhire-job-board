@@ -162,10 +162,8 @@ export function HeroSection() {
           </div>
 
           <div className="mt-4 flex gap-2 text-base leading-[1.6] text-[var(--black)]/70">
-            <p>Popular :</p>
-            <p className="font-medium">
-              UI Designer, UX Researcher, Android, Admin
-            </p>
+            <p>Try :</p>
+            <p className="font-medium">Engineer, Manager, Designer</p>
           </div>
         </div>
 
