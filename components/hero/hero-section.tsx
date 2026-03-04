@@ -1,3 +1,5 @@
+import TopNav from "@/components/top-nav";
+import Link from "next/link";
 import { SearchBar } from "./search-bar";
 
 const heroImage =
@@ -55,59 +57,6 @@ function MenuIcon() {
         strokeWidth="1.8"
       />
     </svg>
-  );
-}
-
-function TopNav() {
-  return (
-    <header className="relative w-full bg-white shadow-[inset_0_-1px_0_0_var(--neutral-20)] lg:shadow-none">
-      <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-4 pb-4 pt-2 lg:h-[78px] lg:px-[124px] lg:py-0">
-        <div className="flex items-center gap-2.5">
-          <LogoMark />
-          <span className="font-logo text-[24px] font-bold leading-none text-[var(--neutral-100)]">
-            QuickHire
-          </span>
-        </div>
-
-        <button
-          aria-label="Open menu"
-          className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--neutral-20)] bg-white lg:hidden"
-          type="button"
-        >
-          <MenuIcon />
-        </button>
-
-        <div className="hidden items-center gap-4 lg:flex">
-          <nav className="mr-8 flex items-center gap-6 text-base font-medium text-[var(--neutral-80)]">
-            <a
-              className="transition-colors hover:text-[var(--neutral-100)]"
-              href="#"
-            >
-              Find Jobs
-            </a>
-            <a
-              className="transition-colors hover:text-[var(--neutral-100)]"
-              href="#"
-            >
-              Browse Companies
-            </a>
-          </nav>
-          <button
-            className="px-4 py-2 text-base font-bold text-[var(--brand-primary)]"
-            type="button"
-          >
-            Login
-          </button>
-          <div className="h-12 w-px bg-[var(--neutral-20)]" />
-          <button
-            className="bg-[var(--brand-primary)] px-6 py-3 text-base font-bold text-white"
-            type="button"
-          >
-            Sign Up
-          </button>
-        </div>
-      </div>
-    </header>
   );
 }
 

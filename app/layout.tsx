@@ -1,3 +1,4 @@
+import Providers from "@/components/providers";
 import type { Metadata } from "next";
 import { Epilogue, Geist_Mono, Red_Hat_Display } from "next/font/google";
 import "./globals.css";
@@ -34,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${epilogue.variable} ${redHatDisplay.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
