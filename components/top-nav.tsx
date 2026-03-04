@@ -2,6 +2,7 @@
 
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { useState } from "react";
 
 function LogoMark() {
   return (
@@ -40,6 +41,7 @@ function MenuIcon() {
 export default function TopNav() {
   const { data: session, status } = useSession();
   const user = session?.user;
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <header className="relative w-full bg-white shadow-[inset_0_-1px_0_0_var(--neutral-20)] lg:shadow-none">
@@ -53,7 +55,9 @@ export default function TopNav() {
 
         <button
           aria-label="Open menu"
+          aria-expanded={menuOpen}
           className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--neutral-20)] bg-white lg:hidden"
+          onClick={() => setMenuOpen((open) => !open)}
           type="button"
         >
           <MenuIcon />
@@ -132,6 +136,86 @@ export default function TopNav() {
           )}
         </div>
       </div>
+
+      {menuOpen ? (
+        <div className="border-t border-[var(--neutral-20)] bg-white px-4 pb-4 pt-3 lg:hidden">
+          <nav className="flex flex-col gap-2 text-base font-medium text-[var(--neutral-80)]">
+            <Link
+              className="rounded-md px-2 py-2 transition-colors hover:bg-[var(--surface-light)] hover:text-[var(--neutral-100)]"
+              href="/jobs"
+              onClick={() => setMenuOpen(false)}
+            >
+              Find Jobs
+            </Link>
+            <Link
+              className="rounded-md px-2 py-2 transition-colors hover:bg-[var(--surface-light)] hover:text-[var(--neutral-100)]"
+              href="/companies"
+              onClick={() => setMenuOpen(false)}
+            >
+              Browse Companies
+            </Link>
+            {user?.role === "USER" ? (
+              <Link
+                className="rounded-md px-2 py-2 font-semibold text-[var(--brand-primary)]"
+                href="/applied-jobs"
+                onClick={() => setMenuOpen(false)}
+              >
+                Applied Jobs
+              </Link>
+            ) : null}
+            {user?.role === "ADMIN" ? (
+              <Link
+                className="rounded-md px-2 py-2 font-semibold text-[var(--brand-primary)]"
+                href="/admin"
+                onClick={() => setMenuOpen(false)}
+              >
+                Admin
+              </Link>
+            ) : null}
+          </nav>
+
+          <div className="mt-4 border-t border-[var(--neutral-20)] pt-3">
+            {status === "loading" ? (
+              <div className="h-10 w-40 animate-pulse rounded bg-[var(--neutral-20)]" />
+            ) : user ? (
+              <div className="space-y-3">
+                <p className="text-sm text-[var(--neutral-80)]">
+                  Hi,{" "}
+                  <span className="font-medium text-[var(--neutral-100)]">
+                    {user.name ?? user.email}
+                  </span>
+                </p>
+                <button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="h-11 w-full rounded-md bg-[var(--neutral-100)] px-4 text-sm font-bold text-white"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  className="flex h-11 items-center justify-center rounded-md border border-[var(--neutral-20)] text-sm font-bold text-[var(--brand-primary)]"
+                  href="/login"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Login
+                </Link>
+                <Link
+                  className="flex h-11 items-center justify-center rounded-md bg-[var(--brand-primary)] text-sm font-bold text-white"
+                  href="/signup"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Sign Up
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }
