@@ -9,11 +9,13 @@ export const RegisterSchema = z.object({
 export const JobCreateSchema = z.object({
   title: z.string().min(2),
   company: z.string().min(2),
+  companyLogo: z.string().trim().optional(),
   location: z.string().min(1),
   type: z.string().min(1),
   description: z.string().min(10),
   isFeatured: z.boolean().optional(),
   categoryId: z.string().min(1),
+  tags: z.array(z.string().trim().min(1)).optional(),
 });
 
 export const JobPatchSchema = JobCreateSchema.partial();
