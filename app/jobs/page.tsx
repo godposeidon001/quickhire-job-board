@@ -1,3 +1,5 @@
+import { SiteFooter } from "@/components/footer/site-footer";
+import TopNav from "@/components/top-nav";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
@@ -22,9 +24,12 @@ type JobDto = {
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: { categoryId?: string };
+  searchParams: Promise<{ categoryId?: string | string[] }>;
 }) {
-  const categoryId = searchParams.categoryId;
+  const params = await searchParams;
+  const categoryId = Array.isArray(params.categoryId)
+    ? params.categoryId[0]
+    : params.categoryId;
 
   const jobsRaw = await prisma.job.findMany({
     where: categoryId ? { categoryId } : undefined,
@@ -59,8 +64,10 @@ export default async function JobsPage({
     categoryId && jobs.length > 0 ? jobs[0].category.name : undefined;
 
   return (
-    <main className="min-h-screen bg-[var(--surface-light)] px-4 py-10">
-      <div className="mx-auto w-full max-w-[1100px]">
+    <>
+      <TopNav />
+      <main className="min-h-screen bg-[var(--surface-light)] px-4 py-10">
+        <div className="mx-auto w-full max-w-[1100px]">
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h1 className="font-heading text-4xl font-semibold text-[var(--neutral-100)]">
@@ -150,7 +157,9 @@ export default async function JobsPage({
             ))}
           </div>
         )}
-      </div>
-    </main>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
   );
 }
