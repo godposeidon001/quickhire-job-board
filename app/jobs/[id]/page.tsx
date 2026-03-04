@@ -1,8 +1,10 @@
 import { SiteFooter } from "@/components/footer/site-footer";
 import TopNav from "@/components/top-nav";
+import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,23 @@ export default async function JobDetailsPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    redirect(`/login?callbackUrl=${encodeURIComponent(`/jobs/${id}`)}`);
+  }
+  const userId = session.user.id;
+
+  const existingApplication = await prisma.application.findFirst({
+    where: {
+      jobId: id,
+      userId,
+    },
+    select: {
+      id: true,
+    },
+  });
+  const hasApplied = Boolean(existingApplication);
 
   const job = await prisma.job.findUnique({
     where: { id },
@@ -74,12 +93,18 @@ export default async function JobDetailsPage({
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="h-12 rounded-lg bg-[var(--brand-primary)] px-7 text-base font-bold text-white transition-colors hover:bg-[#3e38ca]"
-              >
-                Apply Now
-              </button>
+              {hasApplied ? (
+                <span className="inline-flex h-12 items-center rounded-lg bg-[var(--neutral-20)] px-7 text-base font-bold text-[var(--neutral-80)]">
+                  Applied
+                </span>
+              ) : (
+                <Link
+                  href={`/jobs/${job.id}/apply`}
+                  className="inline-flex h-12 items-center rounded-lg bg-[var(--brand-primary)] px-7 text-base font-bold text-white transition-colors hover:bg-[#3e38ca]"
+                >
+                  Apply Now
+                </Link>
+              )}
             </div>
 
             <div className="mt-6 flex flex-wrap gap-2">
@@ -148,15 +173,21 @@ export default async function JobDetailsPage({
                   Ready to apply?
                 </h3>
                 <p className="mt-2 text-sm leading-[1.7] text-[var(--neutral-80)]">
-                  Application form hookup comes next. This button is already in
-                  place for your next step.
+                  Fill in your resume link and cover note to submit your
+                  application.
                 </p>
-                <button
-                  type="button"
-                  className="mt-5 h-11 w-full rounded-lg bg-[var(--brand-primary)] px-5 text-sm font-bold text-white transition-colors hover:bg-[#3e38ca]"
-                >
-                  Apply Now
-                </button>
+                {hasApplied ? (
+                  <span className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--neutral-20)] px-5 text-sm font-bold text-[var(--neutral-80)]">
+                    Applied
+                  </span>
+                ) : (
+                  <Link
+                    href={`/jobs/${job.id}/apply`}
+                    className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--brand-primary)] px-5 text-sm font-bold text-white transition-colors hover:bg-[#3e38ca]"
+                  >
+                    Apply Now
+                  </Link>
+                )}
               </div>
             </aside>
           </section>

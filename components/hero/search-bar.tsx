@@ -48,36 +48,20 @@ function LocationIcon() {
   );
 }
 
-function ChevronDownIcon() {
-  return (
-    <svg
-      aria-hidden
-      fill="none"
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M7 10L12 15L17 10"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
 export function SearchBar() {
   return (
-    <div className="w-full md:max-w-[300px] lg:max-w-[852px] bg-white p-4 shadow-[var(--shadow-search)]">
+    <form
+      action="/jobs"
+      method="get"
+      className="w-full bg-white p-4 shadow-[var(--shadow-search)] md:max-w-[300px] lg:max-w-[852px]"
+    >
       <div className="flex flex-col gap-0 lg:h-[57px] lg:flex-row lg:items-center">
         <div className="flex flex-1 items-center gap-4 border-b border-[var(--neutral-20)] pb-3 text-[var(--neutral-100)] lg:h-full lg:border-b-0 lg:pb-0 lg:pl-4 lg:pr-6">
           <span className="text-[var(--neutral-100)]">
             <SearchIcon />
           </span>
           <input
+            name="q"
             className="w-full border-none bg-transparent text-base leading-[1.6] text-[var(--neutral-60)] placeholder:text-[var(--neutral-60)]/55 focus:outline-none"
             placeholder="Job title or keyword"
             type="text"
@@ -88,24 +72,21 @@ export function SearchBar() {
           <span className="text-[var(--neutral-100)]">
             <LocationIcon />
           </span>
-          <button
-            className="flex w-full items-center justify-between text-left text-base leading-[1.6] text-[var(--neutral-100)]"
-            type="button"
-          >
-            <span>Florence, Italy</span>
-            <span className="text-[var(--neutral-80)]">
-              <ChevronDownIcon />
-            </span>
-          </button>
+          <input
+            name="location"
+            className="w-full border-none bg-transparent text-base leading-[1.6] text-[var(--neutral-100)] placeholder:text-[var(--neutral-60)]/70 focus:outline-none"
+            placeholder="City, country, or remote"
+            type="text"
+          />
         </div>
 
         <button
           className="mt-3 h-[57px] bg-[var(--brand-primary)] px-7 text-lg font-bold leading-[1.6] text-white transition-opacity hover:opacity-90 lg:mt-0"
-          type="button"
+          type="submit"
         >
           Search my job
         </button>
       </div>
-    </div>
+    </form>
   );
 }

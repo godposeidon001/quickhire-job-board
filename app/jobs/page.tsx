@@ -1,6 +1,7 @@
 import { SiteFooter } from "@/components/footer/site-footer";
 import TopNav from "@/components/top-nav";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -24,15 +25,40 @@ type JobDto = {
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ categoryId?: string | string[] }>;
+  searchParams: Promise<{
+    categoryId?: string | string[];
+    q?: string | string[];
+    location?: string | string[];
+  }>;
 }) {
   const params = await searchParams;
   const categoryId = Array.isArray(params.categoryId)
     ? params.categoryId[0]
     : params.categoryId;
+  const q = (Array.isArray(params.q) ? params.q[0] : params.q)?.trim();
+  const location = (
+    Array.isArray(params.location) ? params.location[0] : params.location
+  )?.trim();
+
+  const filters: Prisma.JobWhereInput[] = [];
+  if (categoryId) {
+    filters.push({ categoryId });
+  }
+  if (q) {
+    filters.push({
+      OR: [
+        { title: { contains: q, mode: "insensitive" } },
+        { company: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
+      ],
+    });
+  }
+  if (location) {
+    filters.push({ location: { contains: location, mode: "insensitive" } });
+  }
 
   const jobsRaw = await prisma.job.findMany({
-    where: categoryId ? { categoryId } : undefined,
+    where: filters.length > 0 ? { AND: filters } : undefined,
     orderBy: { createdAt: "desc" },
     include: {
       category: true,
@@ -60,8 +86,8 @@ export default async function JobsPage({
     tags: j.tags.map((t) => t.tag.name),
   }));
 
-  const activeCategoryName =
-    categoryId && jobs.length > 0 ? jobs[0].category.name : undefined;
+  const activeCategoryName = categoryId && jobs.length > 0 ? jobs[0].category.name : undefined;
+  const hasSearch = Boolean(q || location);
 
   return (
     <>
@@ -71,7 +97,11 @@ export default async function JobsPage({
         <div className="mb-8 flex items-end justify-between">
           <div>
             <h1 className="font-heading text-4xl font-semibold text-[var(--neutral-100)]">
-              {activeCategoryName ? `${activeCategoryName} Jobs` : "All Jobs"}
+              {activeCategoryName
+                ? `${activeCategoryName} Jobs`
+                : hasSearch
+                  ? "Search Results"
+                  : "All Jobs"}
             </h1>
 
             <p className="mt-2 text-[var(--neutral-80)]">
@@ -79,12 +109,12 @@ export default async function JobsPage({
             </p>
           </div>
 
-          {categoryId && (
+          {(categoryId || hasSearch) && (
             <Link
               href="/jobs"
               className="text-sm font-semibold text-[var(--brand-primary)]"
             >
-              Clear filter
+              Clear filters
             </Link>
           )}
         </div>

@@ -7,14 +7,17 @@ export async function POST(req: Request) {
   const body = await req.json();
   const parsed = RegisterSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+    const message =
+      parsed.error.issues[0]?.message ?? "Invalid input. Please check your form.";
+    return NextResponse.json({ error: message }, { status: 400 });
   }
 
-  const { name, email, password } = parsed.data;
+  const { name, password } = parsed.data;
+  const email = parsed.data.email.toLowerCase();
 
   const exists = await prisma.user.findUnique({ where: { email } });
   if (exists) {
-    return NextResponse.json({ error: "Email already used" }, { status: 409 });
+    return NextResponse.json({ error: "User already exists with this email." }, { status: 409 });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);

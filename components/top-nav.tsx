@@ -87,6 +87,15 @@ export default function TopNav() {
                 </span>
               </div>
 
+              {user.role === "USER" ? (
+                <Link
+                  className="px-3 py-2 text-sm font-bold text-[var(--brand-primary)]"
+                  href="/applied-jobs"
+                >
+                  Applied Jobs
+                </Link>
+              ) : null}
+
               {/* Optional admin link */}
               {user.role === "ADMIN" ? (
                 <Link
