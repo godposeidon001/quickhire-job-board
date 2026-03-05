@@ -1,5 +1,14 @@
 # QuickHire
 
+## Live Site
+
+- Production URL: ``
+
+## Admin Credentials
+
+- Email: ``
+- Password: ``
+
 QuickHire is a full-stack job portal where users can discover jobs, apply to roles, and track applications, while admins can manage job listings through a dedicated admin panel.
 
 ## Summary
