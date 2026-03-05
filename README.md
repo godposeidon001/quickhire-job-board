@@ -2,12 +2,17 @@
 
 ## Live Site
 
-- Production URL: ``
+- Production URL: `https://quickhire-job-board-iota.vercel.app/`
 
 ## Admin Credentials
 
-- Email: ``
-- Password: ``
+- Email: `admin@quickhire.com`
+- Password: `Admin12345`
+
+## User Credentials
+
+- Email: `syedali@gmail.com`
+- Password: `syed123`
 
 QuickHire is a full-stack job portal where users can discover jobs, apply to roles, and track applications, while admins can manage job listings through a dedicated admin panel.
 
