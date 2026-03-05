@@ -21,6 +21,7 @@ QuickHire is a full-stack job portal where users can discover jobs, apply to rol
 This project includes:
 
 - Public marketing homepage with sections for categories, featured jobs, and latest jobs.
+- Companies page with company-wise job browsing.
 - Job listing page with category, keyword, and location search support.
 - Protected job details and apply flow.
 - Authentication with role-based behavior (`USER` and `ADMIN`).
@@ -32,6 +33,7 @@ This project includes:
 ### As a visitor
 
 - Browse jobs and categories.
+- Browse companies and view jobs under each company.
 - Search jobs by keyword and location.
 - View featured/latest jobs.
 
@@ -86,6 +88,7 @@ This project includes:
 app/
   api/                 # Route handlers (auth, jobs, categories, applications)
   admin/               # Admin panel page
+  companies/           # Companies listing + company jobs
   jobs/                # Jobs list, details, apply pages
   applied-jobs/        # Signed-in user's applications
   login/ signup/       # Auth pages
@@ -171,6 +174,9 @@ npm run lint     # lint project
 - Login supports callback URLs.
 - Protected routes redirect unauthenticated users to `/login` with callback.
 - User roles are stored in session (`USER` / `ADMIN`).
+- Session policy:
+  - JWT/session max age is 15 minutes.
+  - Session token is configured as a browser-session cookie.
 
 ## Admin Panel Notes
 
@@ -190,7 +196,7 @@ npm run lint     # lint project
 
 ## API Overview
 
-- `GET /api/jobs` (supports `categoryId`)
+- `GET /api/jobs` (supports `categoryId`; UI also uses `q` and `location` filters)
 - `POST /api/jobs` (admin only)
 - `GET /api/jobs/:id`
 - `PATCH /api/jobs/:id` (admin only)
@@ -203,4 +209,3 @@ npm run lint     # lint project
 ## Notes
 
 - Some UI images still use `<img>` and may show Next.js lint warnings suggesting `<Image />`.
-- `/companies` link exists in top nav but the page is not implemented yet.
