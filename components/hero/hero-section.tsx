@@ -1,5 +1,4 @@
 import TopNav from "@/components/top-nav";
-import Link from "next/link";
 import { SearchBar } from "./search-bar";
 
 const heroImage =
@@ -18,47 +17,6 @@ const mobileRect2730 =
   "https://www.figma.com/api/mcp/asset/fccc5b39-e17c-465d-97f7-7e66b075b9d4";
 const mobileRect2733 =
   "https://www.figma.com/api/mcp/asset/4a45f2f4-4f52-41b6-bd7a-e4e534181f46";
-
-function LogoMark() {
-  return (
-    <div className="relative h-8 w-8 rounded-full bg-[var(--brand-primary)]">
-      <div className="absolute left-[7px] top-[7px] h-[18px] w-[18px] rounded-full border-2 border-white" />
-      <div className="absolute left-[14px] top-[14px] h-1.5 w-1.5 rounded-full bg-white" />
-    </div>
-  );
-}
-
-function MenuIcon() {
-  return (
-    <svg
-      aria-hidden
-      fill="none"
-      height="24"
-      viewBox="0 0 24 24"
-      width="24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M4 7H20"
-        stroke="#25324B"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M4 12H20"
-        stroke="#25324B"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-      <path
-        d="M4 17H14"
-        stroke="#25324B"
-        strokeLinecap="round"
-        strokeWidth="1.8"
-      />
-    </svg>
-  );
-}
 
 function MobilePattern() {
   return (
@@ -124,12 +82,12 @@ function DesktopPattern() {
 
 export function HeroSection() {
   return (
-    <section className="relative h-[722px] overflow-hidden bg-[var(--surface-light)] lg:h-[794px]">
+    <section className="relative min-h-[722px] overflow-hidden bg-[var(--surface-light)] lg:h-[794px]">
       <MobilePattern />
       <DesktopPattern />
       <TopNav />
 
-      <div className="relative mx-auto flex w-full max-w-[1440px]  px-4 pb-8 pt-4 lg:flex-row lg:justify-between lg:px-[124px] lg:pb-0 lg:pt-[82px]">
+      <div className="relative mx-auto flex w-full max-w-[1440px] px-4 pb-10 pt-4 lg:flex-row lg:justify-between lg:px-[124px] lg:pb-0 lg:pt-[82px]">
         <div className="relative z-10 w-full max-w-[629px]">
           <h1 className="font-heading text-[48px] font-semibold leading-[1.1] text-[var(--neutral-100)] lg:w-[533px] lg:text-[72px]">
             <span className="lg:hidden">
@@ -161,7 +119,7 @@ export function HeroSection() {
             <SearchBar />
           </div>
 
-          <div className="mt-4 flex gap-2 text-base leading-[1.6] text-[var(--black)]/70">
+          <div className="mt-4 flex flex-wrap gap-2 text-sm leading-[1.6] text-[var(--black)]/70 sm:text-base">
             <p>Try :</p>
             <p className="font-medium">Engineer, Manager, Designer</p>
           </div>
