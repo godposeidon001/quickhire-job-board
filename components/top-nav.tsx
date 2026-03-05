@@ -106,7 +106,7 @@ export default function TopNav() {
                   className="px-3 py-2 text-sm font-bold text-[var(--brand-primary)]"
                   href="/admin"
                 >
-                  Admin
+                  Admin Panel
                 </Link>
               ) : null}
 

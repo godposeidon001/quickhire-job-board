@@ -3,8 +3,32 @@ import bcrypt from "bcryptjs";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
+const SESSION_MAX_AGE_SECONDS = 15 * 60;
+const isProd = process.env.NODE_ENV === "production";
+
 export const authOptions: NextAuthOptions = {
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: SESSION_MAX_AGE_SECONDS,
+  },
+  jwt: {
+    maxAge: SESSION_MAX_AGE_SECONDS,
+  },
+  cookies: {
+    // Keep session token as a browser-session cookie configuration.
+    // Combined with maxAge above, sessions also expire after 15 minutes.
+    sessionToken: {
+      name: isProd
+        ? "__Secure-next-auth.session-token"
+        : "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: isProd,
+      },
+    },
+  },
   providers: [
     Credentials({
       name: "Credentials",
