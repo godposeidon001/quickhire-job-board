@@ -1,8 +1,8 @@
-const logoVodafone = "https://www.figma.com/api/mcp/asset/b90b71ee-5820-4161-90d5-4746cd1f073b";
-const logoIntel = "https://www.figma.com/api/mcp/asset/a819aedf-1cc6-4116-a83e-87fc5c73ac7e";
-const logoTesla = "https://www.figma.com/api/mcp/asset/7f8ac672-5df0-4699-8800-93102b131385";
-const logoAmd = "https://www.figma.com/api/mcp/asset/55f6d541-5e64-47bb-bb44-dbc8404251d8";
-const logoTalkit = "https://www.figma.com/api/mcp/asset/e5e299e0-99d6-442a-8240-bfb14e115270";
+const logoVodafone = "/images/vodafone.svg";
+const logoIntel = "/images/intel.svg";
+const logoTesla = "/images/tesla.svg";
+const logoAmd = "/images/amd.svg";
+const logoTalkit = "/images/talkit.svg";
 
 const companyLogos = [
   {

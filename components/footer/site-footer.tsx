@@ -1,13 +1,8 @@
-const iconTwitter =
-  "https://www.figma.com/api/mcp/asset/ddd3be15-ff43-470c-820d-8eba0b91a130";
-const iconLinkedIn =
-  "https://www.figma.com/api/mcp/asset/9b25e7b6-18bc-4814-bc80-92c3e90c6347";
-const iconDribbble =
-  "https://www.figma.com/api/mcp/asset/6f78b95f-d503-4e1a-9ff1-bd7ac47823fd";
-const iconInstagram =
-  "https://www.figma.com/api/mcp/asset/5b2ac923-c9bf-4451-bc72-46e71bc88829";
-const iconFacebook =
-  "https://www.figma.com/api/mcp/asset/8b68d4dd-1e94-42f4-9726-0f8f76fb22bb";
+const iconTwitter = "/images/twitter.png";
+const iconLinkedIn = "/images/linkedin.png";
+const iconDribbble = "/images/dribble.png";
+const iconInstagram = "/images/instagram.png";
+const iconFacebook = "/images/facebook.png";
 
 function LogoMark() {
   return (
@@ -91,11 +86,11 @@ export function SiteFooter() {
             </p>
 
             <div className="flex items-center gap-6">
-              <img alt="Facebook" className="h-8 w-8" src={iconFacebook} />
-              <img alt="Instagram" className="h-8 w-8" src={iconInstagram} />
-              <img alt="Dribbble" className="h-8 w-8" src={iconDribbble} />
-              <img alt="LinkedIn" className="h-8 w-8" src={iconLinkedIn} />
-              <img alt="Twitter" className="h-8 w-8" src={iconTwitter} />
+              <img alt="Facebook" className="h-6 w-6" src={iconFacebook} />
+              <img alt="Instagram" className="h-6 w-6" src={iconInstagram} />
+              <img alt="Dribbble" className="h-6 w-6" src={iconDribbble} />
+              <img alt="LinkedIn" className="h-6 w-6" src={iconLinkedIn} />
+              <img alt="Twitter" className="h-6 w-6" src={iconTwitter} />
             </div>
           </div>
         </div>
