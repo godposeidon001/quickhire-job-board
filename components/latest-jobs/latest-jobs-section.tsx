@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
-const bgAsset = "https://www.figma.com/api/mcp/asset/49ab169c-6e4a-4021-88cf-f15c90814475";
-const patternAsset =
-  "https://www.figma.com/api/mcp/asset/5b6e35fc-f2f1-40bb-b53b-3d3393158451";
+const patternAsset = "/images/latest-jobs-box.svg";
 
 type LatestJob = {
   id: string;
@@ -47,40 +45,40 @@ function JobRow({ job }: { job: LatestJob }) {
   const secondaryTag = job.tags[0] ?? job.categoryName;
 
   return (
-    <article className="bg-white px-6 py-5 lg:px-10 lg:py-6">
-      <div className="flex items-start justify-between gap-5">
-        <div className="flex items-start gap-6">
+    <article className="h-full bg-white px-4 py-5 sm:px-6 lg:px-8 lg:py-6">
+      <div className="flex h-full flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-5">
+        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
           {job.companyLogo ? (
             <img
               alt={`${job.company} logo`}
-              className="h-16 w-16 shrink-0 rounded-full object-cover"
+              className="h-14 w-14 shrink-0 rounded-full object-cover sm:h-16 sm:w-16"
               src={job.companyLogo}
             />
           ) : (
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[var(--brand-secondary)] text-lg font-bold text-[var(--brand-primary)]">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--brand-secondary)] text-base font-bold text-[var(--brand-primary)] sm:h-16 sm:w-16 sm:text-lg">
               {job.company.slice(0, 1).toUpperCase()}
             </div>
           )}
 
           <div className="min-w-0">
-            <h3 className="truncate text-[20px] font-semibold leading-[1.2] text-[var(--neutral-100)]">
+            <h3 className="text-[18px] font-semibold leading-[1.25] text-[var(--neutral-100)] sm:text-[20px]">
               {job.title}
             </h3>
-            <p className="mt-1 text-base leading-[1.6] text-[var(--neutral-80)]">
+            <p className="mt-1 break-words text-sm leading-[1.6] text-[var(--neutral-80)] sm:text-base">
               {job.company}
               <span className="mx-2 inline-block h-1 w-1 rounded-full bg-[var(--neutral-80)] align-middle" />
               {job.location}
             </p>
 
-            <div className="mt-2 flex flex-wrap items-center gap-2">
-              <span className="rounded-[80px] bg-[rgba(86,205,173,0.1)] px-[10px] py-[6px] text-sm font-semibold leading-[1.6] text-[#56CDAD]">
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="rounded-[80px] bg-[rgba(86,205,173,0.1)] px-[10px] py-[6px] text-xs font-semibold leading-[1.6] text-[#56CDAD] sm:text-sm">
                 {job.type}
               </span>
-              <span className="h-6 w-px bg-[var(--neutral-20)]" />
-              <span className="rounded-[80px] border border-[#FFB836] px-[10px] py-[6px] text-sm font-semibold leading-[1.6] text-[#FFB836]">
+              <span className="hidden h-6 w-px bg-[var(--neutral-20)] sm:block" />
+              <span className="rounded-[80px] border border-[#FFB836] px-[10px] py-[6px] text-xs font-semibold leading-[1.6] text-[#FFB836] sm:text-sm">
                 {job.categoryName}
               </span>
-              <span className="rounded-[80px] border border-[var(--brand-primary)] px-[10px] py-[6px] text-sm font-semibold leading-[1.6] text-[var(--brand-primary)]">
+              <span className="rounded-[80px] border border-[var(--brand-primary)] px-[10px] py-[6px] text-xs font-semibold leading-[1.6] text-[var(--brand-primary)] sm:text-sm">
                 {secondaryTag}
               </span>
             </div>
@@ -89,7 +87,7 @@ function JobRow({ job }: { job: LatestJob }) {
 
         <Link
           href={`/jobs/${job.id}`}
-          className="shrink-0 text-sm font-semibold text-[var(--brand-primary)]"
+          className="shrink-0 text-sm font-semibold text-[var(--brand-primary)] sm:pt-1"
         >
           View
         </Link>
@@ -123,17 +121,9 @@ export async function LatestJobsSection() {
     tags: job.tags.map((t) => t.tag.name),
   }));
 
-  const leftJobs = jobs.filter((_, idx) => idx % 2 === 0);
-  const rightJobs = jobs.filter((_, idx) => idx % 2 === 1);
-
   return (
     <section className="relative overflow-hidden bg-[var(--surface-light)] pb-14 pt-14 lg:pb-[72px] lg:pt-[72px]">
-      <img
-        alt=""
-        aria-hidden
-        className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
-        src={bgAsset}
-      />
+      <div className="absolute left-0 top-0 z-10 h-0 w-0 border-r-[120px] border-t-[70px] border-r-transparent border-t-white hidden lg:block" />
       <img
         alt=""
         aria-hidden
@@ -142,13 +132,13 @@ export async function LatestJobsSection() {
       />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-4 lg:px-[124px]">
-        <div className="mb-12 flex items-end justify-between">
+        <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between lg:mb-12">
           <h2 className="font-heading text-[40px] font-semibold leading-[1.1] text-[var(--neutral-100)] lg:text-[48px]">
             Latest <span className="text-[var(--accent-blue)]">jobs open</span>
           </h2>
 
           <Link
-            className="hidden items-center gap-4 text-base font-semibold leading-[1.6] text-[var(--brand-primary)] lg:flex"
+            className="inline-flex items-center gap-3 text-sm font-semibold leading-[1.6] text-[var(--brand-primary)] sm:text-base"
             href="/jobs"
           >
             Show all jobs
@@ -161,18 +151,10 @@ export async function LatestJobsSection() {
             <p className="text-[var(--neutral-80)]">No jobs available yet.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-8">
-            <div className="space-y-4">
-              {leftJobs.map((job) => (
-                <JobRow key={job.id} job={job} />
-              ))}
-            </div>
-
-            <div className="space-y-4">
-              {rightJobs.map((job) => (
-                <JobRow key={job.id} job={job} />
-              ))}
-            </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6">
+            {jobs.map((job) => (
+              <JobRow key={job.id} job={job} />
+            ))}
           </div>
         )}
       </div>
